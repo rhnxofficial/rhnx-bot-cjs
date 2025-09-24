@@ -1,0 +1,38 @@
+{
+  "name": "rhnx-bot-wa",
+  "version": "1.0.0",
+  "description": "WhatsApp Bot menggunakan Baileys",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "baileys",
+    "rhnx"
+  ],
+  "author": "RHNX",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@iamtraction/google-translate": "^2.0.1",
+    "archiver": "^7.0.1",
+    "baileys": "^7.0.0-rc.3",
+    "cfonts": "^3.2.0",
+    "chalk": "^4.1.2",
+    "child_process": "^1.0.2",
+    "chokidar": "^4.0.3",
+    "fs-extra": "^11.3.1",
+    "lowdb": "^7.0.1",
+    "moment-timezone": "^0.6.0",
+    "node-fetch": "^2.6.4",
+    "path": "^0.12.7",
+    "pino": "^9.9.5",
+    "qrcode-terminal": "^0.12.0",
+    "spinnies": "^0.5.1",
+    "string-similarity": "^4.0.4",
+    "util": "^0.12.5"
+  }
+}
