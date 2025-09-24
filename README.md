@@ -3,7 +3,7 @@
   <img src="https://raw.githubusercontent.com/github/explore/main/topics/whatsapp/whatsapp.png" alt="Logo" width="120">
 </p>
 
-<h1 align="center">🔥 RhnxBot — WhatsApp Bot Base</h1>
+<h1 align="center">rhnx-bot — WhatsApp Bot Base</h1>
 
 <p align="center">
   <a href="https://github.com/USERNAME/NAMA-REPO/stargazers"><img src="https://img.shields.io/github/stars/USERNAME/NAMA-REPO?style=social" alt="GitHub stars"></a>
@@ -35,8 +35,8 @@ Cocok untuk developer yang ingin membuat bot sendiri dengan sistem **plugin**, *
 
 ```bash
 # Clone repo
-git clone https://github.com/USERNAME/NAMA-REPO.git
-cd NAMA-REPO
+git clone [https://github.com/rhnxofficial/rhnx-bot.git] 
+cd rhnx-bot
 
 # Install dependency
 npm install
