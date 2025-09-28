@@ -59,6 +59,7 @@ const defaultData = {
   data: [],
   users: {},
   chats: {},
+  chanel: {},
   settings: {},
   toxic: [],
   others: {}

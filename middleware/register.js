@@ -1,35 +1,25 @@
-const {isNumber } = require("../lib/myfunc.js");
+const { isNumber } = require("../lib/myfunc.js");
 
 function makeid(length) {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;
 }
 
-const calender = new Date().toISOString().split("T")[0];
-
-module.exports.register = async function (m) {
+module.exports.register = async function (m, conn) {
   try {
-
     if (!global.db.data.users) global.db.data.users = {};
     if (!global.db.data.chats) global.db.data.chats = {};
-let user = global.db.data.users[m.sender];
+    if (!global.db.data.chanel) global.db.data.chanel = {};
+
+    let user = global.db.data.users[m.sender];
     let chat = global.db.data.chats[m.chat];
-    
-    if (user) {
-      if (!("id" in user)) user.id = m.senderNumber;
-      if (!("serial" in user)) user.serial = makeid(4).toUpperCase();
-      if (!isNumber(user.hit)) user.hit = 1;
-      if (!("date" in user)) user.date = calender;
-      if (!isNumber(user.pc)) user.pc = 0;
-      if (!("registered" in user)) user.registered = false;
-      if (!("name" in user)) user.name = m.pushName || "Guest";
-      if (!("email" in user)) user.email = "";
-    } else {
+    let chanel = global.db.data.chanel[m.chat];
+
+    if (!user) {
       global.db.data.users[m.sender] = {
         id: m.senderNumber,
         name: m.pushName || "Guest",
@@ -43,24 +33,66 @@ let user = global.db.data.users[m.sender];
         limit: 50,
       };
     }
+
     if (m.isGroup) {
-      if (chat) {
-        if (!("name" in chat)) chat.name = m.groupName || "";
-        if (!isNumber(chat.hit)) chat.hit = 0;
-        if (!("welcome" in chat)) chat.welcome = false;
-      } else {
+      if (!chat) {
         global.db.data.chats[m.chat] = {
-          name:  m.groupName || "",
           id: m.chat,
+          name: m.groupName || "",
           hit: 0,
           add: 0,
           welcome: false,
           antispam: true,
           simi: true,
+          type: "group"
         };
+      } else {
+        if (!("name" in chat)) chat.name = m.groupName || "";
+        if (!isNumber(chat.hit)) chat.hit = 0;
       }
     }
+    if (m.isChannel) {
+      try {
+        const metadata = await conn.newsletterMetadata("JID", m.chat);
+
+        let chanel = global.db.data.chanel[m.chat];
+
+        if (!chanel) {
+          global.db.data.chanel[m.chat] = {
+            id: metadata?.id || m.chat,
+            name: metadata?.name || "",
+            desc: metadata?.thread_metadata?.description?.text || "",
+            hit: 0,
+            subscribers: metadata?.thread_metadata?.subscribers_count || 0,
+            type: metadata?.state?.type || "channel"
+          };
+        } else {
+          if (!("name" in chanel))
+            chanel.name = metadata?.thread_metadata?.name?.text || "";
+          if (!("desc" in chanel))
+            chanel.desc = metadata?.thread_metadata?.description?.text || "";
+          if (!("subscribers" in chanel))
+            chanel.subscribers = metadata?.thread_metadata?.subscribers_count || 0;
+          if (!("type" in chanel))
+            chanel.type = metadata?.state?.type || "channel";
+        }
+      } catch (e) {
+        console.error("❌ Gagal ambil metadata channel:", e);
+        if (!global.db.data.chanel[m.chat]) {
+          global.db.data.chanel[m.chat] = {
+            id: m.chat,
+            name: m.chat,
+            desc: "",
+            hit: 0,
+            subscribers: 0,
+            type: "channel"
+          };
+        }
+      }
+    }
+
     await global.db.write();
+
   } catch (e) {
     console.error("❌ Error register:", e);
   }

@@ -18,12 +18,13 @@ const timeNow = () => moment.tz("Asia/Jakarta").format("HH:mm:ss");
 
 exports.Logmessage = (conn, m) => {
     const body = m.budy
+  const isChannel = m.chat?.endsWith("@newsletter"); 
   const isGroup = m.isGroup;
   const type = Object.keys(m.message || {})[0];
   const mediaType = typeMediaApa(type);
   const idConsole = isGroup ? m.chat : m.sender;
 
-  if (m.key.remoteJid === "status@broadcast") return; // skip status WA
+  if (m.key.remoteJid === "status@broadcast") return; 
   if (isGroup) {
     console.log(chalk.bgMagenta.white.bold(" [ MESSAGE INFO - GROUP ] "));
     console.log(
@@ -35,6 +36,15 @@ exports.Logmessage = (conn, m) => {
       `\n${chalk.magenta("│ Group")}     : ${chalk.blueBright(m.groupName)}`,
       `\n${chalk.magenta("│ GroupId")}   : ${chalk.hex("#FFA500")(idConsole)}`,
       `\n${chalk.magenta("└ Time")}      : ${chalk.hex("#FF8800")(timeNow())}\n`
+    );
+} else if (isChannel) {
+    console.log(chalk.bgYellow.black.bold(" [ MESSAGE INFO - CHANNEL ] "));
+    console.log(
+      `\n${chalk.yellow("╭──────────────────────────────")}`,
+      `\n${chalk.yellow("│ Media")}    : ${chalk.yellowBright(mediaType)}`,
+      body ? `\n${chalk.yellow("│ Pesan")}    : ${chalk.green.italic(body)}` : "",
+      `\n${chalk.yellow("│ ChannelId")}: ${chalk.hex("#FFA500")(idConsole)}`,
+      `\n${chalk.yellow("└ Time")}     : ${chalk.hex("#FF8800")(timeNow())}\n`
     );
   } else {
     console.log(chalk.bgGray.white.bold(" [ MESSAGE INFO - PRIVATE ] "));

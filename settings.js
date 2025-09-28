@@ -47,7 +47,7 @@ global.baileys = {
 
 global.owner = {
   lid: "158467297935424@lid",
-  contact: "6281316643491",
+  contact: "628××××",
   number: "6281316643491@s.whatsapp.net",
   name: "Raihan Fadillah",
   email: "ehanzdhoanx@gmail.com"
