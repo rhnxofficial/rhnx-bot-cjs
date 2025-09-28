@@ -24,6 +24,7 @@
     "chalk": "^4.1.2",
     "child_process": "^1.0.2",
     "chokidar": "^4.0.3",
+    "file-type": "^21.0.0",
     "fs-extra": "^11.3.1",
     "lowdb": "^7.0.1",
     "moment-timezone": "^0.6.0",
