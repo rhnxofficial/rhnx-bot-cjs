@@ -19,7 +19,7 @@
     "@hapi/boom": "^10.0.1",
     "@iamtraction/google-translate": "^2.0.1",
     "archiver": "^7.0.1",
-    "baileys": "^7.0.0-rc.3",
+    "baileys": "6.7.21",
     "cfonts": "^3.2.0",
     "chalk": "^4.1.2",
     "child_process": "^1.0.2",
