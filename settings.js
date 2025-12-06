@@ -3,7 +3,6 @@ const pkg = require("baileys/package.json");
 const stringSimilarity = require("string-similarity");
 const { styleText,styleSans } = require("./media/text/styleText");
 
- // FUNCTION CODE
 let d = new Date();
 let locale = "id";
 let currentYear = d.getFullYear();
